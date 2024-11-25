@@ -53,8 +53,6 @@ class BoxResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->required()
                             ->columnSpanFull(),
-                        Forms\Components\Hidden::make('user_id')
-                            ->default(fn(): string => Auth::user()->id)
                     ])
                     ->columns()
             ]);
