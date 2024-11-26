@@ -10,7 +10,9 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\TextEntry\TextEntrySize;
+use Filament\Notifications\Notification;
 use Filament\Support\Enums\FontWeight;
+use Illuminate\Support\HtmlString;
 
 class ViewBox extends ViewRecord
 {
@@ -78,11 +80,37 @@ class ViewBox extends ViewRecord
                 ->icon('heroicon-o-pencil-square')
                 ->hidden(fn(Box $record): bool => (bool) $record->deleted_at),
             Actions\DeleteAction::make()
-                ->icon('heroicon-o-trash'),
+                ->icon('heroicon-o-trash')
+                ->modalDescription(new HtmlString(
+                    'Are you sure you would like to do this?
+                    <strong>
+                    This will delete your box and transaction history.
+                    </strong>
+                    Make sure the balance in it is empty or moved to another box.
+                    '
+                ))
+                ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Box Deleted')
+                        ->body('The box has been deleted successfully')
+                ),
             Actions\ForceDeleteAction::make()
-                ->icon('heroicon-o-trash'),
+                ->icon('heroicon-o-trash')
+                ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Box Deleted')
+                        ->body('The box has been deleted permanently')
+                ),
             Actions\RestoreAction::make()
                 ->icon('heroicon-o-arrow-path')
+                ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Box Restored')
+                        ->body('The box has been restored successfully')
+                )
         ];
     }
 }

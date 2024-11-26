@@ -8,6 +8,8 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Tables;
 use Filament\Tables\Table;
 use App\Models\Box;
+use Filament\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class ListBoxes extends ListRecords
 {
@@ -66,15 +68,69 @@ class ListBoxes extends ListRecords
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make()
+                        ->modalDescription(new HtmlString(
+                            'Are you sure you would like to do this?
+                            <strong>
+                            This will delete your box and transaction history.
+                            </strong>
+                            Make sure the balance in it is empty or moved to another box.
+                            '
+                        ))
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Deleted')
+                                ->body('The box has been deleted successfully')
+                        ),
+                    Tables\Actions\ForceDeleteAction::make()
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Deleted')
+                                ->body('The box has been deleted permanently')
+                        ),
+                    Tables\Actions\RestoreAction::make()
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Restored')
+                                ->body('The box has been restored successfully')
+                        )
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->modalDescription(new HtmlString(
+                            'Are you sure you would like to do this?
+                            <strong>
+                            This will delete your box and transaction history.
+                            </strong>
+                            Make sure the balance in it is empty or moved to another box.
+                            '
+                        ))
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Deleted')
+                                ->body('The box has been deleted successfully')
+                        ),
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Deleted')
+                                ->body('The box has been deleted permanently')
+                        ),
+                    Tables\Actions\RestoreBulkAction::make()
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Box Restored')
+                                ->body('The box has been restored successfully')
+                        )
                 ]),
             ]);
     }
