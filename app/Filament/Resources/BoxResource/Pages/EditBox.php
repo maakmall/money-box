@@ -11,6 +11,15 @@ class EditBox extends EditRecord
 {
     protected static string $resource = BoxResource::class;
 
+    public function mount(int | string $record): void
+    {
+        parent::mount($record);
+
+        if ($this->getRecord()->trashed()) {
+            $this->redirect($this->getRedirectUrl());
+        }
+    }
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('view', ['record' => $this->getRecord()]);
