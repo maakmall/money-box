@@ -12,7 +12,6 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Unique;
 
@@ -104,7 +103,6 @@ class BoxResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
@@ -120,7 +118,9 @@ class BoxResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
+        return parent::getEloquentQuery()
+            ->where('user_id', Auth::user()->id)
+            ->withTrashed();
     }
 
     public static function getRelations(): array
@@ -136,6 +136,7 @@ class BoxResource extends Resource
             'index' => Pages\ListBoxes::route('/'),
             'create' => Pages\CreateBox::route('/create'),
             'edit' => Pages\EditBox::route('/{record}/edit'),
+            'view' => Pages\ViewBox::route('/{record}'),
         ];
     }
 }
