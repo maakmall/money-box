@@ -37,6 +37,13 @@ class ViewBox extends ViewRecord
                         TextEntry::make('progress')
                             ->size(TextEntrySize::Large)
                             ->weight(FontWeight::Bold)
+                            ->color(fn(string $state): string => match (true) {
+                                (int) substr($state, 0, -1) >= 100 => 'success',
+                                (int) substr($state, 0, -1) >= 75 => 'info',
+                                (int) substr($state, 0, -1) >= 50 => 'gray',
+                                (int) substr($state, 0, -1) >= 25 => 'warning',
+                                default => 'danger',
+                            })
                             ->state(
                                 function (Box $record): string {
                                     return $record->target

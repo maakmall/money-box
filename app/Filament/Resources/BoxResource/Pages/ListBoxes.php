@@ -48,7 +48,13 @@ class ListBoxes extends ListRecords
                 Tables\Columns\TextColumn::make('progress')
                     ->sortable()
                     ->badge(fn(Box $record): bool => (bool) $record->target)
-                    ->color('danger')
+                    ->color(fn(string $state): string => match (true) {
+                        (int) substr($state, 0, -1) >= 100 => 'success',
+                        (int) substr($state, 0, -1) >= 75 => 'info',
+                        (int) substr($state, 0, -1) >= 50 => 'gray',
+                        (int) substr($state, 0, -1) >= 25 => 'warning',
+                        default => 'danger',
+                    })
                     ->state(function (Box $record): string {
                         return $record->target
                             ? $record->balance / $record->target * 100 . '%'
