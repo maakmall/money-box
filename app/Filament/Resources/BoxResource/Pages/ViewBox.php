@@ -90,10 +90,10 @@ class ViewBox extends ViewRecord
                 ->icon('heroicon-o-trash')
                 ->modalDescription(new HtmlString(
                     'Are you sure you would like to do this?
+                    <br/>
                     <strong>
-                    This will delete your box and transaction history.
+                    Make sure the balance in it is empty or moved to another box
                     </strong>
-                    Make sure the balance in it is empty or moved to another box.
                     '
                 ))
                 ->successNotification(
@@ -104,6 +104,14 @@ class ViewBox extends ViewRecord
                 ),
             Actions\ForceDeleteAction::make()
                 ->icon('heroicon-o-trash')
+                ->modalDescription(new HtmlString(
+                    'Are you sure you would like to do this?
+                    <br/>
+                    <strong>
+                    This will delete your box and transaction history permanently
+                    </strong>
+                    '
+                ))
                 ->successNotification(
                     Notification::make()
                         ->success()

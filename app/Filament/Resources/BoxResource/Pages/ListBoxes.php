@@ -78,10 +78,10 @@ class ListBoxes extends ListRecords
                     Tables\Actions\DeleteAction::make()
                         ->modalDescription(new HtmlString(
                             'Are you sure you would like to do this?
+                            <br/>
                             <strong>
-                            This will delete your box and transaction history.
+                            Make sure the balance in it is empty or moved to another box
                             </strong>
-                            Make sure the balance in it is empty or moved to another box.
                             '
                         ))
                         ->successNotification(
@@ -91,6 +91,14 @@ class ListBoxes extends ListRecords
                                 ->body('The box has been deleted successfully')
                         ),
                     Tables\Actions\ForceDeleteAction::make()
+                        ->modalDescription(new HtmlString(
+                            'Are you sure you would like to do this?
+                            <br/>
+                            <strong>
+                            This will delete your box and transaction history permanently
+                            </strong>
+                            '
+                        ))
                         ->successNotification(
                             Notification::make()
                                 ->success()
@@ -111,10 +119,10 @@ class ListBoxes extends ListRecords
                     Tables\Actions\DeleteBulkAction::make()
                         ->modalDescription(new HtmlString(
                             'Are you sure you would like to do this?
+                            <br/>
                             <strong>
-                            This will delete your box and transaction history.
+                            Make sure the balance in it is empty or moved to another box
                             </strong>
-                            Make sure the balance in it is empty or moved to another box.
                             '
                         ))
                         ->successNotification(
@@ -124,6 +132,14 @@ class ListBoxes extends ListRecords
                                 ->body('The box has been deleted successfully')
                         ),
                     Tables\Actions\ForceDeleteBulkAction::make()
+                        ->modalDescription(new HtmlString(
+                            'Are you sure you would like to do this?
+                            <br/>
+                            <strong>
+                            This will delete your box and transaction history permanently
+                            </strong>
+                            '
+                        ))
                         ->successNotification(
                             Notification::make()
                                 ->success()
