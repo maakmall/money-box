@@ -47,7 +47,7 @@ class ViewBox extends ViewRecord
                             ->state(
                                 function (Box $record): string {
                                     return $record->target
-                                        ? $record->balance / $record->target * 100 . '%'
+                                        ? number_format($record->balance / $record->target * 100, 2) . '%'
                                         : '-';
                                 }
                             )

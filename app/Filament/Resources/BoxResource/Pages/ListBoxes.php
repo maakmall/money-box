@@ -57,7 +57,7 @@ class ListBoxes extends ListRecords
                     })
                     ->state(function (Box $record): string {
                         return $record->target
-                            ? $record->balance / $record->target * 100 . '%'
+                            ? number_format($record->balance / $record->target * 100, 2) . '%'
                             : '-';
                     }),
                 Tables\Columns\TextColumn::make('created_at')
