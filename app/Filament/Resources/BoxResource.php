@@ -65,7 +65,7 @@ class BoxResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TransactionsRelationManager::class
         ];
     }
 
