@@ -22,6 +22,7 @@ class Transaction extends Model
         'type',
         'amount',
         'balance',
+        'created_at'
     ];
 
     /**

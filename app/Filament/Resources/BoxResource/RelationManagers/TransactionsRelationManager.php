@@ -188,6 +188,7 @@ class TransactionsRelationManager extends RelationManager
                 'type' => TransactionType::Kredit,
                 'amount' => $data['amount'],
                 'balance' => $box->balance,
+                'created_at' => now()
             ]);
 
             $this->notifyCreated()->send();
@@ -204,6 +205,7 @@ class TransactionsRelationManager extends RelationManager
                 'type' => TransactionType::Debit,
                 'amount' => $data['amount'],
                 'balance' => $box->balance,
+                'created_at' => now()
             ]);
 
             $this->notifyCreated()->send();
