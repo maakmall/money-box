@@ -31,6 +31,8 @@ class TransactionsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date')
                     ->dateTime(),
+                Tables\Columns\TextColumn::make('description')
+                    ->placeholder('-'),
                 Tables\Columns\TextColumn::make('type')
                     ->badge()
                     ->color(fn(TransactionType $state): string => match ($state) {
@@ -147,6 +149,7 @@ class TransactionsRelationManager extends RelationManager
                             ->prefix('Rp ')
                             ->mask(RawJs::make("\$money(\$input, ',', '.')"))
                             ->stripCharacters('.'),
+                        Forms\Components\Textarea::make('description'),
                     ])
                     ->modalWidth(MaxWidth::Small)
                     ->action(fn(array $data) => $this->debit($data)),
@@ -159,6 +162,7 @@ class TransactionsRelationManager extends RelationManager
                             ->prefix('Rp ')
                             ->mask(RawJs::make("\$money(\$input, ',', '.')"))
                             ->stripCharacters('.'),
+                        Forms\Components\Textarea::make('description'),
                     ])
                     ->modalWidth(MaxWidth::Small)
                     ->action(fn(array $data) => $this->kredit($data)),
@@ -187,6 +191,7 @@ class TransactionsRelationManager extends RelationManager
             $box->transactions()->create([
                 'type' => TransactionType::Kredit,
                 'amount' => $data['amount'],
+                'description' => $data['description'],
                 'balance' => $box->balance,
                 'created_at' => now()
             ]);
@@ -204,6 +209,7 @@ class TransactionsRelationManager extends RelationManager
             $box->transactions()->create([
                 'type' => TransactionType::Debit,
                 'amount' => $data['amount'],
+                'description' => $data['description'],
                 'balance' => $box->balance,
                 'created_at' => now()
             ]);

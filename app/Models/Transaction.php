@@ -20,6 +20,7 @@ class Transaction extends Model
     protected $fillable = [
         'box_id',
         'type',
+        'description',
         'amount',
         'balance',
         'created_at'
